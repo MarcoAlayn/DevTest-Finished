@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { Favorites } = require('../db.js');
 
 class PokemonController {
   static async getPokemonByName(req, res) {
@@ -71,6 +72,38 @@ class PokemonController {
       return pokemonDetails;
     } catch (error) {
       throw new Error('Error al obtener los Pokémon por ID.');
+    }
+  }
+
+  static async addToFavorites(req, res) {
+    try {
+      const { userId, pokemonId } = req.body;
+
+      // Verificar si el Pokémon ya está en favoritos del usuario
+      const existingFavorite = await Favorites.findOne({
+        where: { user_id: userId, pokemon_id: pokemonId },
+      });
+
+      if (existingFavorite) {
+        return res
+          .status(400)
+          .json({ error: 'Este Pokémon ya está en tus favoritos.' });
+      }
+
+      // Crear una nueva entrada en la tabla de Favorites
+      await Favorites.create({
+        user_id: userId,
+        pokemon_id: pokemonId,
+      });
+
+      res
+        .status(201)
+        .json({ message: 'Pokémon agregado a favoritos con éxito.' });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: 'Error al agregar el Pokémon a favoritos.' });
     }
   }
 }
