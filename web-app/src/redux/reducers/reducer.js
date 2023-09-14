@@ -1,5 +1,5 @@
 import { LOGIN, LOGOUT } from "../actions/LoginActions";
-import { GET_ALL_POKEMONS } from "../actions/PokemonActions";
+import { GET_ALL_POKEMONS, ADD_TO_FAVORITES } from "../actions/PokemonActions";
 
 const initialState = {
   user: null,
@@ -25,6 +25,10 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allPokemons: action.payload,
+      };
+    case ADD_TO_FAVORITES:
+      return {
+        ...state,
       };
     default:
       return state;

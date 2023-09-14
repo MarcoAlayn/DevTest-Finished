@@ -29,7 +29,7 @@ function FavoritesPage() {
       <Grid container spacing={2}>
         {pokemons.map((pokemon) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={pokemon.id}>
-           <PokemonCard name={pokemon.name} imageBack={pokemon.imageBack} imageFront={pokemon.imageFront} />
+           <PokemonCard id={pokemon.id} name={pokemon.name} imageBack={pokemon.imageBack} imageFront={pokemon.imageFront} />
           </Grid>
         ))}
       </Grid>
